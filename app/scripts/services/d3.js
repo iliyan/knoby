@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('lucieApp', [])
-  .factory('d3Service', ['$document', '$q', '$rootScope',
+angular.module('lucieApp')
+  .factory('d3', ['$document', '$q', '$rootScope',
     function ($document, $q, $rootScope) {
       var d = $q.defer();
 

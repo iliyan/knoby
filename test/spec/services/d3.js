@@ -7,8 +7,8 @@ describe('Service: d3', function () {
 
   // instantiate service
   var d3;
-  beforeEach(inject(function (_d3Service_) {
-    d3 = _d3Service_;
+  beforeEach(inject(function (_d3_) {
+    d3 = _d3_;
   }));
 
   it('should do something', function () {

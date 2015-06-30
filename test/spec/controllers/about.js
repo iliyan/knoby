@@ -18,6 +18,7 @@ describe('Controller: AboutCtrl', function () {
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
+    expect(AboutCtrl).toBeDefined();
     expect(scope.awesomeThings.length).toBe(3);
   });
 });
