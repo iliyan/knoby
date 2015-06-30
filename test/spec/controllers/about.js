@@ -1,12 +1,13 @@
 'use strict';
 
+/* global describe, beforeEach, it, expect, inject, module */
+
 describe('Controller: AboutCtrl', function () {
 
   // load the controller's module
   beforeEach(module('lucieApp'));
 
-  var AboutCtrl,
-    scope;
+  var AboutCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
