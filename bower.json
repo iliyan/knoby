@@ -10,12 +10,12 @@
     "angular-sanitize": "~1.3",
     "angular-touch": "~1.3",
     "bootstrap": "~3.3",
-    "d3": "~3.5.5"
+    "d3": "~3.5.5",
+    "threejs": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.3"
   },
-
   "overrides": {
     "comment": "See http://blog.getbootstrap.com/2015/06/15/bootstrap-3-3-5-released/#wiredep-and-bower",
     "bootstrap": {
