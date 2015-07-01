@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name lucieApp
+ * @name knobyApp
  * @description
- * # lucieApp
+ * # knobyApp
  *
  * Main module of the application.
  */
 angular
-  .module('lucieApp', [
+  .module('knobyApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',

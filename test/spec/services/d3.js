@@ -3,7 +3,7 @@
 describe('Service: d3', function () {
 
   // load the service's module
-  beforeEach(module('lucieApp'));
+  beforeEach(module('knobyApp'));
 
   // instantiate service
   var d3;

@@ -1,5 +1,5 @@
 {
-  "name": "lucie",
+  "name": "knoby",
   "version": "0.0.0",
   "dependencies": {
     "angular": "~1.3",
@@ -27,5 +27,5 @@
     }
   },
   "appPath": "app",
-  "moduleName": "lucieApp"
+  "moduleName": "knobyApp"
 }

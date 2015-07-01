@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name lucieApp.controller:AboutCtrl
+ * @name knobyApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the lucieApp
+ * Controller of the knobyApp
  */
-angular.module('lucieApp')
+angular.module('knobyApp')
   .controller('AboutCtrl', ['$scope', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
