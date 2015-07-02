@@ -12,7 +12,8 @@
     "bootstrap": "~3.3",
     "d3": "~3.5.5",
     "threejs": "*",
-    "raphael": "~2.1.4"
+    "raphael": "~2.1.4",
+    "raphael.free_transform": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.3"
