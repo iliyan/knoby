@@ -22,10 +22,18 @@ angular.module('knobyApp')
           var circle = paper.circle(320, 200, 100);
 
           // Sets the fill attribute of the circle to red (#f00)
-          circle.attr("fill", "#f00");
+          //circle.attr("fill", "#f00");
 
           // Sets the stroke attribute of the circle to white
-          circle.attr("stroke", "#fff");
+          circle.attr("stroke", "#f00");
+          circle.attr("stroke-width", "20");
+          circle.attr("stroke-dasharray", ["", "-"]);
+
+          circle.dblclick(function(){
+            options.drag = (Array.isArray(options.drag) && options.drag.indexOf('self') >= 0) ? [null, null] : [null, 'self'];
+            options.rotate = (Array.isArray(options.rotate) && options.rotate.indexOf('self') >= 0) ? [null, null, null] : [null, null, 'self'];
+            paper.freeTransform(circle).setOpts(options, function(){})
+          });
 
           var options = {
             //attrs: {fill: $('input[name=color]:checked').val(), stroke: 'white'},
@@ -61,6 +69,7 @@ angular.module('knobyApp')
             //  $('#scale-bboxsides').is(':checked') ? 'bboxSides' : null,
             //  $('#scale-self').is(':checked') ? 'self' : null
             //],
+            scale: [],
             //size: $('input[name=size]:checked').val(),
             //snap: {
             //  drag: $('input[name=snap-drag]:checked').val(),
