@@ -15,6 +15,6 @@ describe('Directive: simpleKnob', function () {
   it('should make hidden element visible', inject(function ($compile) {
     element = angular.element('<simple-knob></simple-knob>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the simpleKnob directive');
+    expect(element.text()).toBe('');
   }));
 });
