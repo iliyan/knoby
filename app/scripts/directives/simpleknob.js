@@ -19,6 +19,7 @@ angular.module('knobyApp')
           var parent = angular.element(element).parent()[0];
           var paper = raphael(parent, '100%', '100%');
 
+
           // Creates the 'menu' circles for conditions, commands, and destinations
           var controls = paper.set();
           var conditionsFactory = paper.circle(32, 32, 20).attr('fill', 'rgb(243, 231, 214)');
