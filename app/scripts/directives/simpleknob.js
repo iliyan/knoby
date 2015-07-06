@@ -7,18 +7,27 @@
  * # simpleKnob
  */
 angular.module('knobyApp')
-  .directive('simpleKnob', ['raphael', function (raphaelService) {
+  .directive('simpleKnob', ['raphael', '$window', function (raphaelService, $window) {
     return {
-      template: '<div></div>',
+      template: false,
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        element.text('this is the simpleKnob directive');
 
         raphaelService.then(function (Raphael) {
-          // Creates canvas 320 × 200 at 10, 50
-          var paper = Raphael(element[0].parentElement, 640, 400);
 
-          // Creates circle at x = 50, y = 40, with radius 10
+          // Creates canvas
+          var parent = angular.element(element).parent()[0];
+          var paper = Raphael(parent, "100%", "100%");
+
+          // Creates circles for conditions, commands, and destinations
+          var controls = paper.set();
+          controls.push(paper.circle(32, 32, 20).attr("fill", "rgb(243, 231, 214)"),
+            paper.circle(parent.offsetWidth / 2, 32, 20).attr("fill", "rgb(214, 223, 254)"),
+            paper.circle(parent.offsetWidth - 62, 32, 20).attr("fill", "rgb(255, 255, 255)"));
+          controls.attr("stroke-width", "3");
+
+
+          // Creates circle
           var circle = paper.circle(320, 200, 100);
 
           // Sets the fill attribute of the circle to red (#f00)
@@ -30,6 +39,7 @@ angular.module('knobyApp')
           circle.attr("stroke-dasharray", ["", "-"]);
 
           circle.dblclick(function(){
+            options.draw = (Array.isArray(options.draw) && options.draw.indexOf('bbox') >= 0) ? [null, null] : [null, 'bbox'];
             options.drag = (Array.isArray(options.drag) && options.drag.indexOf('self') >= 0) ? [null, null] : [null, 'self'];
             options.rotate = (Array.isArray(options.rotate) && options.rotate.indexOf('self') >= 0) ? [null, null, null] : [null, null, 'self'];
             paper.freeTransform(circle).setOpts(options, function(){})
@@ -46,7 +56,7 @@ angular.module('knobyApp')
             //  $('#drag-center').is(':checked') ? 'center' : null,
             //  $('#drag-self').is(':checked') ? 'self' : null
             //],
-            drag: ['self'],
+            drag: [null, 'self'],
             //keepRatio: [
             //  $('#keepratio-axisx').is(':checked') ? 'axisX' : null,
             //  $('#keepratio-axisy').is(':checked') ? 'axisY' : null,
@@ -62,6 +72,11 @@ angular.module('knobyApp')
             //  $('#rotate-axisy').is(':checked') ? 'axisY' : null,
             //  $('#rotate-self').is(':checked') ? 'self' : null
             //],
+            rotate: [
+               null,
+               null,
+               null
+            ],
             //scale: [
             //  $('#scale-axisx').is(':checked') ? 'axisX' : null,
             //  $('#scale-axisy').is(':checked') ? 'axisY' : null,
@@ -69,7 +84,7 @@ angular.module('knobyApp')
             //  $('#scale-bboxsides').is(':checked') ? 'bboxSides' : null,
             //  $('#scale-self').is(':checked') ? 'self' : null
             //],
-            scale: [],
+            scale: [null, null, null, null],
             //size: $('input[name=size]:checked').val(),
             //snap: {
             //  drag: $('input[name=snap-drag]:checked').val(),
