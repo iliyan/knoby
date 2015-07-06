@@ -12,10 +12,10 @@ angular.module('knobyApp')
       template: '<div></div>',
       restrict: 'EA',
       scope: {
-        width: "&width",
-        height: "&height"
+        width: '&width',
+        height: '&height'
       },
-      link: function (scope, element, attrs) {
+      link: function (scope, element) {
 
         var current = {width: scope.width() || 1000, height: scope.height() || 1000};
 

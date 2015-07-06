@@ -6,7 +6,7 @@ describe('Directive: simpleLineChart', function () {
   beforeEach(module('knobyApp'));
 
   var element,
-    rootScope, scope;
+    rootScope;
 
   beforeEach(inject(function ($rootScope) {
     rootScope = $rootScope;

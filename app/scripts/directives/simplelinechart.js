@@ -11,7 +11,7 @@ angular.module('knobyApp')
     return {
       restrict: 'EA',
       scope: {},
-      link: function (scope, element, attrs) {
+      link: function (s, element) {
         d3Service.then(function (d3) {
 
           var margin = {top: 20, right: 20, bottom: 30, left: 50},
@@ -49,7 +49,7 @@ angular.module('knobyApp')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
           // Hard coded data
-          scope.data = [
+          s.data = [
             {date: '4-Apr-12', close: 34},
             {date: '5-Apr-12', close: 45},
             {date: '6-Apr-12', close: 37},
@@ -58,15 +58,15 @@ angular.module('knobyApp')
             {date: '9-Apr-12', close: 77}
           ];
 
-          scope.data.forEach(function (d) {
+          s.data.forEach(function (d) {
             d.date = parseDate(d.date);
             d.close = +d.close;
           });
 
-          x.domain(d3.extent(scope.data, function (d) {
+          x.domain(d3.extent(s.data, function (d) {
             return d.date;
           }));
-          y.domain(d3.extent(scope.data, function (d) {
+          y.domain(d3.extent(s.data, function (d) {
             return d.close;
           }));
 
@@ -86,7 +86,7 @@ angular.module('knobyApp')
             .text('Price ($)');
 
           svg.append('path')
-            .datum(scope.data)
+            .datum(s.data)
             .attr('class', 'line')
             .attr('d', line);
         });
