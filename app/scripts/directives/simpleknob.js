@@ -19,12 +19,68 @@ angular.module('knobyApp')
           var parent = angular.element(element).parent()[0];
           var paper = Raphael(parent, "100%", "100%");
 
-          // Creates circles for conditions, commands, and destinations
+          // Creates the "menu" circles for conditions, commands, and destinations
           var controls = paper.set();
-          controls.push(paper.circle(32, 32, 20).attr("fill", "rgb(243, 231, 214)"),
-            paper.circle(parent.offsetWidth / 2, 32, 20).attr("fill", "rgb(214, 223, 254)"),
-            paper.circle(parent.offsetWidth - 62, 32, 20).attr("fill", "rgb(255, 255, 255)"));
+          var conditions_factory = paper.circle(32, 32, 20).attr("fill", "rgb(243, 231, 214)");
+          var commands_factory = paper.circle(parent.offsetWidth / 2, 32, 20).attr("fill", "rgb(214, 223, 254)");
+          var destinations_factory = paper.circle(parent.offsetWidth - 62, 32, 20).attr("fill", "rgb(255, 255, 255)");
+          controls.push(conditions_factory,
+            commands_factory,
+            destinations_factory);
           controls.attr("stroke-width", "3");
+
+          var conditions_factory_glow = conditions_factory.glow().hide();
+          conditions_factory.hover(function () {
+            conditions_factory_glow.show();
+          }, function () {
+            conditions_factory_glow.hide();
+          });
+
+          var new_condition;
+          var x, y, new_conditions_factory, conditions = [];
+          conditions_factory.click(function () {
+            new_condition = paper.circle().attr({
+              fill:"rgb(243, 231, 214)",
+              cx: this.attr("cx"),
+              cy: this.attr("cy"),
+              r: 100
+            });
+            new_condition.drag(function (dx, dy) {
+              this.attr({
+                cx: Math.max(x + dx, 15),
+                cy: Math.max(y + dy, 15),
+              });
+            }, function () {
+              x = this.attr("cx");
+              y = this.attr("cy");
+
+            }, function () {
+              conditions.push(this);
+            });
+          });
+
+          //conditions_factory.drag(function (dx, dy) {
+          //  this.attr({
+          //    cx: Math.max(x + dx, 15),
+          //    cy: Math.max(y + dy, 15),
+          //    r: 100
+          //  });
+          //}, function () {
+          //  new_conditions_factory = this.clone();
+          //  x = this.attr("cx");
+          //  y = this.attr("cy");
+          //  r = this.attr("r");
+          //
+          //}, function () {
+          //  conditions_factory_glow.hide();
+          //  this.unhover();
+          //  this.undrag();
+          //
+          //  conditions.push(this);
+          //
+          //  conditions_factory = new_conditions_factory;
+          //  conditions_factory_glow = conditions_factory.glow().hide();
+          //});
 
 
           // Creates circle
@@ -38,11 +94,12 @@ angular.module('knobyApp')
           circle.attr("stroke-width", "20");
           circle.attr("stroke-dasharray", ["", "-"]);
 
-          circle.dblclick(function(){
+          circle.dblclick(function () {
             options.draw = (Array.isArray(options.draw) && options.draw.indexOf('bbox') >= 0) ? [null, null] : [null, 'bbox'];
             options.drag = (Array.isArray(options.drag) && options.drag.indexOf('self') >= 0) ? [null, null] : [null, 'self'];
             options.rotate = (Array.isArray(options.rotate) && options.rotate.indexOf('self') >= 0) ? [null, null, null] : [null, null, 'self'];
-            paper.freeTransform(circle).setOpts(options, function(){})
+            paper.freeTransform(circle).setOpts(options, function () {
+            })
           });
 
           var options = {
@@ -73,9 +130,9 @@ angular.module('knobyApp')
             //  $('#rotate-self').is(':checked') ? 'self' : null
             //],
             rotate: [
-               null,
-               null,
-               null
+              null,
+              null,
+              null
             ],
             //scale: [
             //  $('#scale-axisx').is(':checked') ? 'axisX' : null,
@@ -98,7 +155,8 @@ angular.module('knobyApp')
             //}
           };
 
-          paper.freeTransform(circle).setOpts(options, function(){})
+          paper.freeTransform(circle).setOpts(options, function () {
+          })
         });
       }
     };
