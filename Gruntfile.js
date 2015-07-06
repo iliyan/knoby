@@ -27,6 +27,35 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+    // Deployment stuff
+    buildcontrol: {
+      options: {
+        dir: 'dist',
+        commit: true,
+        push: true,
+        message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+      },
+      pages: {
+        options: {
+          remote: 'git@github.com:iliyan/knoby.git',
+          branch: 'gh-pages'
+        }
+      }
+      //, heroku: {
+      //  options: {
+      //    remote: 'git@heroku.com:example-heroku-webapp-1988.git',
+      //    branch: 'master',
+      //    tag: pkg.version
+      //  }
+      //},
+      //local: {
+      //  options: {
+      //    remote: '../',
+      //    branch: 'build'
+      //  }
+      //}
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -388,6 +417,9 @@ module.exports = function (grunt) {
       }
     }
   });
+
+  // Get the grunt-build-control task to facilitate the end-product deployment
+  grunt.loadNpmTasks('grunt-build-control');
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
