@@ -24,23 +24,17 @@ angular.module('knobyApp')
       var x, y;
       var newCondition;
       this.view.click(function () {
-        newCondition = paper.circle().attr({
-          fill: 'rgb(243, 231, 214)',
-          cx: this.attr('cx'),
-          cy: this.attr('cy'),
-          r: 100
-        });
-        newCondition.drag(function (dx, dy) {
+        newCondition = this.clone().unclick().attr({'r':this.attr('r')+10}).drag(function (dx, dy) {
           this.attr({
             cx: Math.max(x + dx, 15),
-            cy: Math.max(y + dy, 15),
+            cy: Math.max(y + dy, 15)
           });
         }, function () {
           x = this.attr('cx');
           y = this.attr('cy');
 
         }, function () {
-          console.log('new: ' + newCondition);
+          newCondition.animate({ms:600, easing: 'bounce', 'r':100, 'stroke-width': 20});
           onNewInstance(newCondition);
         });
       });
@@ -80,23 +74,23 @@ angular.module('knobyApp')
             paper.circle(parent.offsetWidth - 62, 32, 20).attr('fill', 'rgb(255, 255, 255)').attr('stroke-width', '3'));
 
           // Creates circle
-          var circle = paper.circle(320, 200, 100);
+          //var circle = paper.circle(320, 200, 100);
 
           // Sets the fill attribute of the circle to red (#f00)
           //circle.attr('fill', '#f00');
 
           // Sets the stroke attribute of the circle to white
-          circle.attr('stroke', '#f00');
-          circle.attr('stroke-width', '20');
-          circle.attr('stroke-dasharray', ['', '-']);
+          //circle.attr('stroke', '#f00');
+          //circle.attr('stroke-width', '20');
+          //circle.attr('stroke-dasharray', ['', '-']);
 
-          circle.dblclick(function () {
-            options.draw = (Array.isArray(options.draw) && options.draw.indexOf('bbox') >= 0) ? [null, null] : [null, 'bbox'];
-            options.drag = (Array.isArray(options.drag) && options.drag.indexOf('self') >= 0) ? [null, null] : [null, 'self'];
-            options.rotate = (Array.isArray(options.rotate) && options.rotate.indexOf('self') >= 0) ? [null, null, null] : [null, null, 'self'];
-            paper.freeTransform(circle).setOpts(options, function () {
-            });
-          });
+          //circle.dblclick(function () {
+          //  options.draw = (Array.isArray(options.draw) && options.draw.indexOf('bbox') >= 0) ? [null, null] : [null, 'bbox'];
+          //  options.drag = (Array.isArray(options.drag) && options.drag.indexOf('self') >= 0) ? [null, null] : [null, 'self'];
+          //  options.rotate = (Array.isArray(options.rotate) && options.rotate.indexOf('self') >= 0) ? [null, null, null] : [null, null, 'self'];
+          //  paper.freeTransform(circle).setOpts(options, function () {
+          //  });
+          //});
 
           var options = {
             //attrs: {fill: $('input[name=color]:checked').val(), stroke: 'white'},
@@ -151,8 +145,8 @@ angular.module('knobyApp')
             //}
           };
 
-          paper.freeTransform(circle).setOpts(options, function () {
-          });
+          //paper.freeTransform(circle).setOpts(options, function () {
+          //});
         });
       }
     };
