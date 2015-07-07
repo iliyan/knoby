@@ -7,41 +7,8 @@
  * # simpleKnob
  */
 angular.module('knobyApp')
-  .directive('simpleKnob', ['raphael', function (raphaelService) {
+  .directive('simpleKnob', ['raphael', 'knobs', function (raphaelService, knobsFactory) {
 
-    function ConditionsFactory(paper, onNewInstance, view) {
-      this.view = view || paper.circle(32, 32, 20).attr({
-        'fill': 'rgb(0, 0, 0)',
-        'stroke-width': '3'
-      });
-      this.view.data('glow', this.view.glow().hide());
-      this.view.hover(function () {
-        this.data('glow').show();
-      }, function () {
-        this.data('glow').hide();
-      });
-
-      var x, y;
-      var newCondition;
-      this.view.click(function () {
-        newCondition = this.clone().unclick().attr({'r':this.attr('r')+10}).drag(function (dx, dy) {
-          this.attr({
-            cx: Math.max(x + dx, 15),
-            cy: Math.max(y + dy, 15)
-          });
-        }, function () {
-          x = this.attr('cx');
-          y = this.attr('cy');
-
-        }, function () {
-          newCondition.animate({ms:600, easing: 'bounce', 'r':100, 'stroke-width': 20});
-          onNewInstance(newCondition);
-        });
-      });
-
-    }
-
-    ConditionsFactory.prototype = {};
 
     return {
       template: false,
@@ -58,20 +25,29 @@ angular.module('knobyApp')
           var commands = [];
 
           // Creates the 'menu' circles for conditions, commands, and destinations
-          var conditionsFactory = new ConditionsFactory(paper, function (cond) {
+          var conditionsFactory = new knobsFactory.ConditionsFactoryController(
+            paper.circle(32, 32, 20).attr({
+              'fill': 'rgb(243, 231, 214)',
+              'stroke-width': '3'
+            }), function (cond) {
               conditions.push(cond);
-            },
-            paper.circle(32, 32, 20).attr({'fill': 'rgb(243, 231, 214)', 'stroke-width': '3'}));
+            });
 
-          var commandsFactory = new ConditionsFactory(paper, function (cond) {
+          var commandsFactory = new knobsFactory.ConditionsFactoryController(
+            paper.circle(parent.offsetWidth / 2, 32, 20).attr({
+              'fill': 'rgb(214, 223, 254)',
+              'stroke-width': '3'
+            }), function (cond) {
               commands.push(cond);
-            },
-            paper.circle(parent.offsetWidth / 2, 32, 20).attr('fill', 'rgb(214, 223, 254)').attr('stroke-width', '3'));
+            });
 
-          var destinationsFactory = new ConditionsFactory(paper, function (cond) {
+          var destinationsFactory = new knobsFactory.ConditionsFactoryController(
+            paper.circle(parent.offsetWidth - 62, 32, 20).attr({
+              'fill': 'rgb(255, 255, 255)',
+              'stroke-width': '3'
+            }), function (cond) {
               commands.push(cond);
-            },
-            paper.circle(parent.offsetWidth - 62, 32, 20).attr('fill', 'rgb(255, 255, 255)').attr('stroke-width', '3'));
+            });
 
           // Creates circle
           //var circle = paper.circle(320, 200, 100);
@@ -85,12 +61,12 @@ angular.module('knobyApp')
           //circle.attr('stroke-dasharray', ['', '-']);
 
           //circle.dblclick(function () {
-          //  options.draw = (Array.isArray(options.draw) && options.draw.indexOf('bbox') >= 0) ? [null, null] : [null, 'bbox'];
-          //  options.drag = (Array.isArray(options.drag) && options.drag.indexOf('self') >= 0) ? [null, null] : [null, 'self'];
-          //  options.rotate = (Array.isArray(options.rotate) && options.rotate.indexOf('self') >= 0) ? [null, null, null] : [null, null, 'self'];
-          //  paper.freeTransform(circle).setOpts(options, function () {
-          //  });
-          //});
+          //  options.draw = (Array.isArray(options.draw) && options.draw.indexOf('bbox') >= 0)
+          // ? [null, null] : [null, 'bbox']; options.drag = (Array.isArray(options.drag) &&
+          // options.drag.indexOf('self') >= 0) ? [null, null] : [null, 'self']; options.rotate
+          // = (Array.isArray(options.rotate) && options.rotate.indexOf('self') >= 0) ? [null,
+          // null, null] : [null, null, 'self']; paper.freeTransform(circle).setOpts(options,
+          // function () { }); });
 
           var options = {
             //attrs: {fill: $('input[name=color]:checked').val(), stroke: 'white'},
