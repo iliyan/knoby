@@ -26,26 +26,17 @@ angular.module('knobyApp')
 
           // Creates the 'menu' circles for conditions, commands, and destinations
           var conditionsFactory = new knobsFactory.ConditionsFactoryController(
-            paper.circle(32, 32, 20).attr({
-              'fill': 'rgb(243, 231, 214)',
-              'stroke-width': '3'
-            }), function (cond) {
+            paper.circle(32, 32, 20), function (cond) {
               conditions.push(cond);
             });
 
-          var commandsFactory = new knobsFactory.ConditionsFactoryController(
-            paper.circle(parent.offsetWidth / 2, 32, 20).attr({
-              'fill': 'rgb(214, 223, 254)',
-              'stroke-width': '3'
-            }), function (cond) {
+          var commandsFactory = new knobsFactory.CommandsFactoryController(
+            paper.circle(parent.offsetWidth / 2, 32, 20), function (cond) {
               commands.push(cond);
             });
 
-          var destinationsFactory = new knobsFactory.ConditionsFactoryController(
-            paper.circle(parent.offsetWidth - 62, 32, 20).attr({
-              'fill': 'rgb(255, 255, 255)',
-              'stroke-width': '3'
-            }), function (cond) {
+          var destinationsFactory = new knobsFactory.DestinationsFactoryController(
+            paper.circle(parent.offsetWidth - 62, 32, 20), function (cond) {
               commands.push(cond);
             });
 

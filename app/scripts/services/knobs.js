@@ -26,7 +26,7 @@ angular.module('knobyApp')
       this.onStart = function () { // start ...
         self.x = this.attr('cx');
         self.y = this.attr('cy');
-        onStart.call(this);
+        return angular.isFunction(onStart) ? onStart.call(this): undefined;
       };
 
       view.drag(this.onMove, this.onStart, function () { // end ...
@@ -34,6 +34,11 @@ angular.module('knobyApp')
         onDone.call(this);
       });
     }
+    DragController.prototype = {};
+    DragController.prototype.constructor = DragController;
+
+
+
 
     function HoverController(view, glow) {
       glow.hide();
@@ -47,33 +52,110 @@ angular.module('knobyApp')
         glow.remove();
       };
     }
+    HoverController.prototype = {};
+    HoverController.prototype.constructor = HoverController;
 
-    function ConditionsFactoryController(view, onNewInstance) {
+
+
+    function Factory(clazz) {
+      this.clazz = ['kby-factory', clazz].join(' ');
+    }
+    Factory.prototype = {};
+    Factory.prototype.constructor = Factory;
+    Factory.prototype.generate = function (Ctor, view, onNewInstance) {
+      var instance = new Ctor(view);
+      return angular.isFunction(onNewInstance) ? onNewInstance.call(instance) : instance;
+    };
+    Factory.prototype.attach = function (view, onNewInstance) {
       if (!view) {
         throw new ReferenceError();
       }
-      var self = this;
       this.view = view;
-      this.onDragStart = function () {
-        var clone = new ConditionsFactoryController(this.clone(), onNewInstance);
-      };
+      angular.element(view.node).attr('class', this.clazz);
+
+      this.glow = view.glow();
+      this.hoverer = new HoverController(this.view, this.glow);
+
+      var self = this;
       this.onDragEnd = function () {
         self.dragster.destroy();
         self.hoverer.destroy();
-        onNewInstance.call(new ConditionController(this));
+        return self.generate(self.producer, this, onNewInstance);
       };
 
-      this.dragster = new DragController(this.view, this.onDragStart, this.onDragEnd);
-      this.glow = view.glow();
-      this.hoverer = new HoverController(this.view, this.glow);
+      this.onDragStart = function () {
+        var factory = self.generate(self.constructor, this.clone());
+        angular.element(this.node).attr('class', '');
+        return factory;
+      };
+      this.dragster = new DragController(this.view, self.onDragStart, self.onDragEnd);
+    };
+
+
+
+    function ConditionsFactoryController(view, onNewInstance) {
+      this.attach(view, onNewInstance);
     }
+    ConditionsFactoryController.prototype = new Factory('kby-condition');
+    ConditionsFactoryController.prototype.constructor = ConditionsFactoryController;
+    ConditionsFactoryController.prototype.producer = ConditionController;
+
+
+
+    function CommandsFactoryController(view, onNewInstance) {
+      this.attach(view, onNewInstance);
+    }
+    CommandsFactoryController.prototype = new Factory('kby-command');
+    CommandsFactoryController.prototype.constructor = CommandsFactoryController;
+    CommandsFactoryController.prototype.producer = CommandController;
+
+
+
+    function DestinationsFactoryController(view, onNewInstance) {
+      this.attach(view, onNewInstance);
+    }
+    DestinationsFactoryController.prototype = new Factory('kby-destination');
+    DestinationsFactoryController.prototype.constructor = DestinationsFactoryController;
+    DestinationsFactoryController.prototype.producer = DestinationController;
+
 
     function ConditionController(view) {
-
+      if (!view) {
+        throw new ReferenceError();
+      }
+      this.view = view;
+      angular.element(view.node).attr('class', 'kby-condition');
     }
+    ConditionController.prototype = {clazz: 'kby-condition'};
+    ConditionController.prototype.constructor = ConditionController;
+
+
+    function CommandController(view) {
+      if (!view) {
+        throw new ReferenceError();
+      }
+      this.view = view;
+      angular.element(view.node).attr('class', 'kby-command');
+    }
+    CommandController.prototype = {clazz: 'kby-command'};
+    CommandController.prototype.constructor = CommandController;
+
+
+    function DestinationController(view) {
+      if (!view) {
+        throw new ReferenceError();
+      }
+      this.view = view;
+      angular.element(view.node).attr('class', 'kby-destination');
+    }
+    DestinationController.prototype = {clazz: 'kby-destination'};
+    DestinationController.prototype.constructor = DestinationController;
+
 
     return {
-      ConditionsFactoryController: ConditionsFactoryController
+      ConditionsFactoryController: ConditionsFactoryController,
+      CommandsFactoryController: CommandsFactoryController,
+      DestinationsFactoryController: DestinationsFactoryController
     };
 
   }]);

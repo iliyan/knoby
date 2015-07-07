@@ -101,3 +101,41 @@ body {
   stroke: steelblue;
   stroke-width: 2.5px;
 }
+
+/* knobs: */
+
+.kby-condition {
+  fill: #f3e7d6;
+  stroke-width: 13;
+  r: 60;
+}
+
+.kby-factory.kby-condition {
+  fill: #f3e7d6;
+  stroke-width: 3;
+  r: 20
+}
+
+.kby-command {
+  fill: #d6dffe;
+  stroke-width: 13;
+  r: 60;
+}
+
+.kby-factory.kby-command {
+  fill: #d6dffe;
+  stroke-width: 3;
+  r: 20
+}
+
+.kby-destination {
+  fill: #ffffff;
+  stroke-width: 13;
+  r: 60;
+}
+
+.kby-factory.kby-destination {
+  fill: #ffffff;
+  stroke-width: 3;
+  r: 20
+}
