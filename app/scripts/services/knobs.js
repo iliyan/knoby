@@ -26,7 +26,7 @@ angular.module('knobyApp')
       this.onStart = function () { // start ...
         self.x = this.attr('cx');
         self.y = this.attr('cy');
-        return angular.isFunction(onStart) ? onStart.call(this): undefined;
+        return angular.isFunction(onStart) ? onStart.call(this) : undefined;
       };
 
       view.drag(this.onMove, this.onStart, function () { // end ...
@@ -34,10 +34,9 @@ angular.module('knobyApp')
         onDone.call(this);
       });
     }
+
     DragController.prototype = {};
     DragController.prototype.constructor = DragController;
-
-
 
 
     function HoverController(view, glow) {
@@ -52,14 +51,15 @@ angular.module('knobyApp')
         glow.remove();
       };
     }
+
     HoverController.prototype = {};
     HoverController.prototype.constructor = HoverController;
-
 
 
     function Factory(clazz) {
       this.clazz = ['kby-factory', clazz].join(' ');
     }
+
     Factory.prototype = {};
     Factory.prototype.constructor = Factory;
     Factory.prototype.generate = function (Ctor, view, onNewInstance) {
@@ -92,52 +92,88 @@ angular.module('knobyApp')
     };
 
 
-
     function ConditionsFactoryController(view, onNewInstance) {
       this.attach(view, onNewInstance);
     }
+
     ConditionsFactoryController.prototype = new Factory('kby-condition');
     ConditionsFactoryController.prototype.constructor = ConditionsFactoryController;
     ConditionsFactoryController.prototype.producer = ConditionController;
 
 
-
     function CommandsFactoryController(view, onNewInstance) {
       this.attach(view, onNewInstance);
     }
+
     CommandsFactoryController.prototype = new Factory('kby-command');
     CommandsFactoryController.prototype.constructor = CommandsFactoryController;
     CommandsFactoryController.prototype.producer = CommandController;
 
 
-
     function DestinationsFactoryController(view, onNewInstance) {
       this.attach(view, onNewInstance);
     }
+
     DestinationsFactoryController.prototype = new Factory('kby-destination');
     DestinationsFactoryController.prototype.constructor = DestinationsFactoryController;
     DestinationsFactoryController.prototype.producer = DestinationController;
 
 
-
-
     function KnobController(clazz) {
       this.clazz = [this.clazz, clazz].join(' ');
     }
+
     KnobController.prototype = {clazz: 'kby-knob'};
     KnobController.prototype.constructor = KnobController;
-    KnobController.prototype.attach = function(view){
+    KnobController.prototype.adder = function (newClass) {
+      var oldClass = angular.element(this.view.node).attr('class');
+
+      // NOTE: addClass/removeClass don't work with SVGElement (by DOM design.
+      // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass)
+      angular.element(this.view.node).attr('class', [oldClass, newClass].join(' '));
+
+      var self = this;
+      this.view.undblclick();
+      this.view.dblclick(function () {
+        self.remover.call(self, 'adjustable');
+      });
+    };
+
+    // element.classList property?
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
+
+    KnobController.prototype.remover = function (newClass) {
+      var oldClass = angular.element(this.view.node).attr('class');
+
+      // NOTE: addClass/removeClass don't work with SVGElement (by DOM design.
+      // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass)
+      angular.element(this.view.node).attr('class', oldClass.replace(newClass, ''));
+
+      var self = this;
+      this.view.undblclick();
+      this.view.dblclick(function () {
+        self.adder.call(self, 'adjustable');
+      });
+    };
+
+    KnobController.prototype.attach = function (view) {
       if (!view) {
         throw new ReferenceError();
       }
       this.view = view;
       angular.element(view.node).attr('class', this.clazz);
+
+      var self = this;
+      this.view.dblclick(function () {
+        self.adder.call(self, 'adjustable');
+      });
     };
 
 
     function ConditionController(view) {
-     this.attach(view);
+      this.attach(view);
     }
+
     ConditionController.prototype = new KnobController('kby-condition');
     ConditionController.prototype.constructor = ConditionController;
 
@@ -145,6 +181,7 @@ angular.module('knobyApp')
     function CommandController(view) {
       this.attach(view);
     }
+
     CommandController.prototype = new KnobController('kby-command');
     CommandController.prototype.constructor = CommandController;
 
@@ -152,6 +189,7 @@ angular.module('knobyApp')
     function DestinationController(view) {
       this.attach(view);
     }
+
     DestinationController.prototype = new KnobController('kby-destination');
     DestinationController.prototype.constructor = DestinationController;
 

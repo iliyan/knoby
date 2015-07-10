@@ -108,7 +108,7 @@ body {
   r: 60;
 }
 
-.kby-knob:active {
+.adjustable {
   stroke-dasharray: 2 4;
   stroke-dashoffset: 16;
   stroke: #fafafa;
