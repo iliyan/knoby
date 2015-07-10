@@ -119,36 +119,40 @@ angular.module('knobyApp')
     DestinationsFactoryController.prototype.producer = DestinationController;
 
 
-    function ConditionController(view) {
+
+
+    function KnobController(clazz) {
+      this.clazz = [this.clazz, clazz].join(' ');
+    }
+    KnobController.prototype = {clazz: 'kby-knob'};
+    KnobController.prototype.constructor = KnobController;
+    KnobController.prototype.attach = function(view){
       if (!view) {
         throw new ReferenceError();
       }
       this.view = view;
-      angular.element(view.node).attr('class', 'kby-condition');
+      angular.element(view.node).attr('class', this.clazz);
+    };
+
+
+    function ConditionController(view) {
+     this.attach(view);
     }
-    ConditionController.prototype = {clazz: 'kby-condition'};
+    ConditionController.prototype = new KnobController('kby-condition');
     ConditionController.prototype.constructor = ConditionController;
 
 
     function CommandController(view) {
-      if (!view) {
-        throw new ReferenceError();
-      }
-      this.view = view;
-      angular.element(view.node).attr('class', 'kby-command');
+      this.attach(view);
     }
-    CommandController.prototype = {clazz: 'kby-command'};
+    CommandController.prototype = new KnobController('kby-command');
     CommandController.prototype.constructor = CommandController;
 
 
     function DestinationController(view) {
-      if (!view) {
-        throw new ReferenceError();
-      }
-      this.view = view;
-      angular.element(view.node).attr('class', 'kby-destination');
+      this.attach(view);
     }
-    DestinationController.prototype = {clazz: 'kby-destination'};
+    DestinationController.prototype = new KnobController('kby-destination');
     DestinationController.prototype.constructor = DestinationController;
 
 
