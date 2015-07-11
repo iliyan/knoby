@@ -35,8 +35,10 @@ module.exports = function(config) {
       'bower_components/threejs/build/three.js',
       'bower_components/raphael/raphael.js',
       'bower_components/raphael.free_transform/raphael.free_transform.js',
+      'bower_components/lodash/lodash.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
+      "app/scripts/modules/lodash/app.js",
       "app/scripts/app.js",
       "app/scripts/**/*.js",
       "test/mock/**/*.js",

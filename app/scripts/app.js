@@ -10,6 +10,7 @@
  */
 angular
   .module('knobyApp', [
+    'knoby.lodash',
     'ngAnimate',
     'ngCookies',
     'ngResource',

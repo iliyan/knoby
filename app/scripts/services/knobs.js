@@ -8,7 +8,7 @@
  * Factory in the knobyApp.
  */
 angular.module('knobyApp')
-  .factory('knobs', [function () {
+  .factory('knobs', ['lodash', function (_) {
     function DragController(view, onStart, onDone) {
 
       var self = this;
@@ -125,34 +125,13 @@ angular.module('knobyApp')
 
     KnobController.prototype = {clazz: 'kby-knob'};
     KnobController.prototype.constructor = KnobController;
-    KnobController.prototype.adder = function (newClass) {
-      var oldClass = angular.element(this.view.node).attr('class');
 
-      // NOTE: addClass/removeClass don't work with SVGElement (by DOM design.
-      // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass)
-      angular.element(this.view.node).attr('class', [oldClass, newClass].join(' '));
-
+    KnobController.prototype.toggler = function (newClass) {
       var self = this;
-      this.view.undblclick();
-      this.view.dblclick(function () {
-        self.remover.call(self, 'adjustable');
-      });
-    };
-
-    // element.classList property?
-    // https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
-
-    KnobController.prototype.remover = function (newClass) {
-      var oldClass = angular.element(this.view.node).attr('class');
-
-      // NOTE: addClass/removeClass don't work with SVGElement (by DOM design.
-      // See http://stackoverflow.com/questions/8638621/jquery-svg-why-cant-i-addclass)
-      angular.element(this.view.node).attr('class', oldClass.replace(newClass, ''));
-
-      var self = this;
-      this.view.undblclick();
-      this.view.dblclick(function () {
-        self.adder.call(self, 'adjustable');
+      self.view.node.classList.toggle(newClass);
+      self.view.undblclick();
+      self.view.dblclick(function () {
+        self.toggler.call(self, newClass);
       });
     };
 
@@ -160,13 +139,11 @@ angular.module('knobyApp')
       if (!view) {
         throw new ReferenceError();
       }
-      this.view = view;
-      angular.element(view.node).attr('class', this.clazz);
-
       var self = this;
-      this.view.dblclick(function () {
-        self.adder.call(self, 'adjustable');
-      });
+      self.view = view;
+      angular.element(self.view.node).attr('class', self.clazz);
+      self.view.node.classList.add('adjustable');
+      self.toggler('adjustable');
     };
 
 
