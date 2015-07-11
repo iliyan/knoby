@@ -83,36 +83,17 @@ body {
 }
 
 
-/* D3:simpleLineChart */
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 2.5px;
-}
-
 /* knobs: */
 
 .kby-knob {
   r: 60;
+  stroke: red;
+  stroke-width: 6;
 }
 
 .adjustable {
-  stroke-dasharray: 2 4;
+  stroke-dasharray: 2 2;
   stroke-dashoffset: 16;
-  stroke: #fafafa;
-  stroke-width: 3%;
 }
 
 
@@ -125,7 +106,7 @@ body {
 }
 
 .kby-destination {
-  fill: #ffffff;
+  fill: #e0e0e0;
 }
 
 .kby-factory.kby-condition {
@@ -141,7 +122,7 @@ body {
 }
 
 .kby-factory.kby-destination {
-  fill: #ffffff;
+  fill: #e0e0e0;
   stroke-width: 3;
   r: 20
 }
