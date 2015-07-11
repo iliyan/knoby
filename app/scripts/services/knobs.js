@@ -144,6 +144,15 @@ angular.module('knobyApp')
       angular.element(self.view.node).attr('class', self.clazz);
       self.view.node.classList.add('adjustable');
       self.toggler('adjustable');
+
+
+      self.onDragEnd = function () {
+      };
+
+      self.onDragStart = function () {
+      };
+
+      self.dragster = new DragController(self.view, self.onDragStart, self.onDragEnd);
     };
 
 
