@@ -8,7 +8,7 @@
  * Factory in the knobyApp.
  */
 angular.module('knobyApp')
-  .factory('knobs', [function () {
+  .factory('knobs', ['lodash', function (_) {
     function DragController(view, onStart, onDone) {
 
       var self = this;
@@ -30,10 +30,9 @@ angular.module('knobyApp')
         onDone.call(this);
       });
     }
+
     DragController.prototype = {};
     DragController.prototype.constructor = DragController;
-
-
 
 
     function HoverController(view, glow) {
@@ -48,14 +47,15 @@ angular.module('knobyApp')
         glow.remove();
       };
     }
+
     HoverController.prototype = {};
     HoverController.prototype.constructor = HoverController;
-
 
 
     function Factory(clazz) {
       this.clazz = ['kby-factory', clazz].join(' ');
     }
+
     Factory.prototype = {};
     Factory.prototype.constructor = Factory;
     Factory.prototype.generate = function (Ctor, view, onNewInstance) {
@@ -88,63 +88,82 @@ angular.module('knobyApp')
     };
 
 
-
     function ConditionsFactoryController(view, onNewInstance) {
       this.attach(view, onNewInstance);
     }
+
     ConditionsFactoryController.prototype = new Factory('kby-condition');
     ConditionsFactoryController.prototype.constructor = ConditionsFactoryController;
     ConditionsFactoryController.prototype.producer = ConditionController;
 
 
-
     function CommandsFactoryController(view, onNewInstance) {
       this.attach(view, onNewInstance);
     }
+
     CommandsFactoryController.prototype = new Factory('kby-command');
     CommandsFactoryController.prototype.constructor = CommandsFactoryController;
     CommandsFactoryController.prototype.producer = CommandController;
 
 
-
     function DestinationsFactoryController(view, onNewInstance) {
       this.attach(view, onNewInstance);
     }
+
     DestinationsFactoryController.prototype = new Factory('kby-destination');
     DestinationsFactoryController.prototype.constructor = DestinationsFactoryController;
     DestinationsFactoryController.prototype.producer = DestinationController;
 
 
-    function ConditionController(view) {
+    function KnobController(clazz) {
+      this.clazz = [this.clazz, clazz].join(' ');
+    }
+
+    KnobController.prototype = {clazz: 'kby-knob'};
+    KnobController.prototype.constructor = KnobController;
+
+    KnobController.prototype.toggler = function (newClass) {
+      var self = this;
+      self.view.node.classList.toggle(newClass);
+      self.view.undblclick();
+      self.view.dblclick(function () {
+        self.toggler.call(self, newClass);
+      });
+    };
+
+    KnobController.prototype.attach = function (view) {
       if (!view) {
         throw new ReferenceError();
       }
-      this.view = view;
-      angular.element(view.node).attr('class', 'kby-condition');
+      var self = this;
+      self.view = view;
+      angular.element(self.view.node).attr('class', self.clazz);
+      self.view.node.classList.add('adjustable');
+      self.toggler('adjustable');
+    };
+
+
+    function ConditionController(view) {
+      this.attach(view);
     }
-    ConditionController.prototype = {clazz: 'kby-condition'};
+
+    ConditionController.prototype = new KnobController('kby-condition');
     ConditionController.prototype.constructor = ConditionController;
 
 
     function CommandController(view) {
-      if (!view) {
-        throw new ReferenceError();
-      }
-      this.view = view;
-      angular.element(view.node).attr('class', 'kby-command');
+      this.attach(view);
     }
-    CommandController.prototype = {clazz: 'kby-command'};
+
+    CommandController.prototype = new KnobController('kby-command');
     CommandController.prototype.constructor = CommandController;
 
 
     function DestinationController(view) {
-      if (!view) {
-        throw new ReferenceError();
-      }
-      this.view = view;
-      angular.element(view.node).attr('class', 'kby-destination');
+      this.attach(view);
     }
-    DestinationController.prototype = {clazz: 'kby-destination'};
+
+    DestinationController.prototype = new KnobController('kby-destination');
     DestinationController.prototype.constructor = DestinationController;
 
 

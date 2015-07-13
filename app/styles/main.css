@@ -83,31 +83,30 @@ body {
 }
 
 
-/* D3:simpleLineChart */
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 2.5px;
-}
-
 /* knobs: */
+
+.kby-knob {
+  r: 60;
+  stroke: red;
+  stroke-width: 6;
+}
+
+.adjustable {
+  stroke-dasharray: 2 2;
+  stroke-dashoffset: 16;
+}
+
 
 .kby-condition {
   fill: #f3e7d6;
-  stroke-width: 13;
-  r: 60;
+}
+
+.kby-command {
+  fill: #d6dffe;
+}
+
+.kby-destination {
+  fill: #e0e0e0;
 }
 
 .kby-factory.kby-condition {
@@ -116,26 +115,14 @@ body {
   r: 20
 }
 
-.kby-command {
-  fill: #d6dffe;
-  stroke-width: 13;
-  r: 60;
-}
-
 .kby-factory.kby-command {
   fill: #d6dffe;
   stroke-width: 3;
   r: 20
 }
 
-.kby-destination {
-  fill: #ffffff;
-  stroke-width: 13;
-  r: 60;
-}
-
 .kby-factory.kby-destination {
-  fill: #ffffff;
+  fill: #e0e0e0;
   stroke-width: 3;
   r: 20
 }
