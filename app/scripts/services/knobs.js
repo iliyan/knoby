@@ -79,11 +79,11 @@ angular.module('knobyApp')
 
 
       self.onDragEnd = function () {
-        this.animate({'opacity': 1}, 500);
+        this.node.classList.remove('mobile');
       };
 
       self.onDragStart = function () {
-        this.animate({'opacity': 0.1}, 500);
+        this.node.classList.add('mobile');
       };
 
       self.dragster = new DragController(self.view, self.onDragStart, self.onDragEnd);
