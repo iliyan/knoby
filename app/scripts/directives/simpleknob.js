@@ -40,6 +40,8 @@ angular.module('knobyApp')
               commands.push(cond);
             });
 
+          [].push(conditionsFactory, commandsFactory, destinationsFactory);
+
           // Creates circle
           //var circle = paper.circle(320, 200, 100);
 
@@ -59,58 +61,58 @@ angular.module('knobyApp')
           // null, null] : [null, null, 'self']; paper.freeTransform(circle).setOpts(options,
           // function () { }); });
 
-          var options = {
-            //attrs: {fill: $('input[name=color]:checked').val(), stroke: 'white'},
-            //draw: [
-            //  $('#draw-bbox').is(':checked') ? 'bbox' : null,
-            //  $('#draw-circle').is(':checked') ? 'circle' : null
-            //],
-            //distance: $('input[name=distance]:checked').val(),
-            //drag: [
-            //  $('#drag-center').is(':checked') ? 'center' : null,
-            //  $('#drag-self').is(':checked') ? 'self' : null
-            //],
-            drag: [null, 'self'],
-            //keepRatio: [
-            //  $('#keepratio-axisx').is(':checked') ? 'axisX' : null,
-            //  $('#keepratio-axisy').is(':checked') ? 'axisY' : null,
-            //  $('#keepratio-bboxcorners').is(':checked') ? 'bboxCorners' : null,
-            //  $('#keepratio-bboxsides').is(':checked') ? 'bboxSides' : null
-            //],
-            //range: {
-            //  rotate: $('input[name=range-rotate]:checked').val().split(','),
-            //  scale: $('input[name=range-scale]:checked').val().split(',')
-            //},
-            //rotate: [
-            //  $('#rotate-axisx').is(':checked') ? 'axisX' : null,
-            //  $('#rotate-axisy').is(':checked') ? 'axisY' : null,
-            //  $('#rotate-self').is(':checked') ? 'self' : null
-            //],
-            rotate: [
-              null,
-              null,
-              null
-            ],
-            //scale: [
-            //  $('#scale-axisx').is(':checked') ? 'axisX' : null,
-            //  $('#scale-axisy').is(':checked') ? 'axisY' : null,
-            //  $('#scale-bboxcorners').is(':checked') ? 'bboxCorners' : null,
-            //  $('#scale-bboxsides').is(':checked') ? 'bboxSides' : null,
-            //  $('#scale-self').is(':checked') ? 'self' : null
-            //],
-            scale: [null, null, null, null],
-            //size: $('input[name=size]:checked').val(),
-            //snap: {
-            //  drag: $('input[name=snap-drag]:checked').val(),
-            //  rotate: $('input[name=snap-rotate]:checked').val(),
-            //  scale: $('input[name=snap-scale]:checked').val()
-            //},
-            //snapDist: {
-            //  drag: $('input[name=snapdist-drag]:checked').val(),
-            //  rotate: $('input[name=snapdist-rotate]:checked').val(),
-            //  scale: $('input[name=snapdist-scale]:checked').val()
-            //}
-          };
+          //var options = {
+          //  //attrs: {fill: $('input[name=color]:checked').val(), stroke: 'white'},
+          //  //draw: [
+          //  //  $('#draw-bbox').is(':checked') ? 'bbox' : null,
+          //  //  $('#draw-circle').is(':checked') ? 'circle' : null
+          //  //],
+          //  //distance: $('input[name=distance]:checked').val(),
+          //  //drag: [
+          //  //  $('#drag-center').is(':checked') ? 'center' : null,
+          //  //  $('#drag-self').is(':checked') ? 'self' : null
+          //  //],
+          //  drag: [null, 'self'],
+          //  //keepRatio: [
+          //  //  $('#keepratio-axisx').is(':checked') ? 'axisX' : null,
+          //  //  $('#keepratio-axisy').is(':checked') ? 'axisY' : null,
+          //  //  $('#keepratio-bboxcorners').is(':checked') ? 'bboxCorners' : null,
+          //  //  $('#keepratio-bboxsides').is(':checked') ? 'bboxSides' : null
+          //  //],
+          //  //range: {
+          //  //  rotate: $('input[name=range-rotate]:checked').val().split(','),
+          //  //  scale: $('input[name=range-scale]:checked').val().split(',')
+          //  //},
+          //  //rotate: [
+          //  //  $('#rotate-axisx').is(':checked') ? 'axisX' : null,
+          //  //  $('#rotate-axisy').is(':checked') ? 'axisY' : null,
+          //  //  $('#rotate-self').is(':checked') ? 'self' : null
+          //  //],
+          //  rotate: [
+          //    null,
+          //    null,
+          //    null
+          //  ],
+          //  //scale: [
+          //  //  $('#scale-axisx').is(':checked') ? 'axisX' : null,
+          //  //  $('#scale-axisy').is(':checked') ? 'axisY' : null,
+          //  //  $('#scale-bboxcorners').is(':checked') ? 'bboxCorners' : null,
+          //  //  $('#scale-bboxsides').is(':checked') ? 'bboxSides' : null,
+          //  //  $('#scale-self').is(':checked') ? 'self' : null
+          //  //],
+          //  scale: [null, null, null, null],
+          //  //size: $('input[name=size]:checked').val(),
+          //  //snap: {
+          //  //  drag: $('input[name=snap-drag]:checked').val(),
+          //  //  rotate: $('input[name=snap-rotate]:checked').val(),
+          //  //  scale: $('input[name=snap-scale]:checked').val()
+          //  //},
+          //  //snapDist: {
+          //  //  drag: $('input[name=snapdist-drag]:checked').val(),
+          //  //  rotate: $('input[name=snapdist-rotate]:checked').val(),
+          //  //  scale: $('input[name=snapdist-scale]:checked').val()
+          //  //}
+          //};
 
           //paper.freeTransform(circle).setOpts(options, function () {
           //});

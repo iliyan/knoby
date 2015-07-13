@@ -8,7 +8,7 @@
  * Factory in the knobyApp.
  */
 angular.module('knobyApp')
-  .factory('knobs', ['lodash', function (_) {
+  .factory('knobs', [function () {
     function DragController(view, onStart, onDone) {
 
       var self = this;
@@ -50,6 +50,68 @@ angular.module('knobyApp')
 
     HoverController.prototype = {};
     HoverController.prototype.constructor = HoverController;
+
+    function KnobController(clazz) {
+      this.clazz = [this.clazz, clazz].join(' ');
+    }
+
+    KnobController.prototype = {clazz: 'kby-knob'};
+    KnobController.prototype.constructor = KnobController;
+
+    KnobController.prototype.toggler = function (newClass) {
+      var self = this;
+      self.view.node.classList.toggle(newClass);
+      self.view.undblclick();
+      self.view.dblclick(function () {
+        self.toggler.call(self, newClass);
+      });
+    };
+
+    KnobController.prototype.attach = function (view) {
+      if (!view) {
+        throw new ReferenceError();
+      }
+      var self = this;
+      self.view = view;
+      angular.element(self.view.node).attr('class', self.clazz);
+      self.view.node.classList.add('adjustable');
+      self.toggler('adjustable');
+
+
+      self.onDragEnd = function () {
+        this.animate({'opacity': 1}, 500);
+      };
+
+      self.onDragStart = function () {
+        this.animate( {'opacity':0.1}, 500);
+      };
+
+      self.dragster = new DragController(self.view, self.onDragStart, self.onDragEnd);
+    };
+
+
+    function ConditionController(view) {
+      this.attach(view);
+    }
+
+    ConditionController.prototype = new KnobController('kby-condition');
+    ConditionController.prototype.constructor = ConditionController;
+
+
+    function CommandController(view) {
+      this.attach(view);
+    }
+
+    CommandController.prototype = new KnobController('kby-command');
+    CommandController.prototype.constructor = CommandController;
+
+
+    function DestinationController(view) {
+      this.attach(view);
+    }
+
+    DestinationController.prototype = new KnobController('kby-destination');
+    DestinationController.prototype.constructor = DestinationController;
 
 
     function Factory(clazz) {
@@ -114,68 +176,6 @@ angular.module('knobyApp')
     DestinationsFactoryController.prototype.constructor = DestinationsFactoryController;
     DestinationsFactoryController.prototype.producer = DestinationController;
 
-
-    function KnobController(clazz) {
-      this.clazz = [this.clazz, clazz].join(' ');
-    }
-
-    KnobController.prototype = {clazz: 'kby-knob'};
-    KnobController.prototype.constructor = KnobController;
-
-    KnobController.prototype.toggler = function (newClass) {
-      var self = this;
-      self.view.node.classList.toggle(newClass);
-      self.view.undblclick();
-      self.view.dblclick(function () {
-        self.toggler.call(self, newClass);
-      });
-    };
-
-    KnobController.prototype.attach = function (view) {
-      if (!view) {
-        throw new ReferenceError();
-      }
-      var self = this;
-      self.view = view;
-      angular.element(self.view.node).attr('class', self.clazz);
-      self.view.node.classList.add('adjustable');
-      self.toggler('adjustable');
-
-
-      self.onDragEnd = function () {
-        this.animate({"opacity": 1}, 500);
-      };
-
-      self.onDragStart = function () {
-        this.animate( {"opacity":0.1}, 500);
-      };
-
-      self.dragster = new DragController(self.view, self.onDragStart, self.onDragEnd);
-    };
-
-
-    function ConditionController(view) {
-      this.attach(view);
-    }
-
-    ConditionController.prototype = new KnobController('kby-condition');
-    ConditionController.prototype.constructor = ConditionController;
-
-
-    function CommandController(view) {
-      this.attach(view);
-    }
-
-    CommandController.prototype = new KnobController('kby-command');
-    CommandController.prototype.constructor = CommandController;
-
-
-    function DestinationController(view) {
-      this.attach(view);
-    }
-
-    DestinationController.prototype = new KnobController('kby-destination');
-    DestinationController.prototype.constructor = DestinationController;
 
 
     return {
