@@ -96,8 +96,8 @@ angular.module('knobyApp')
       var oldsign=0;
       self.view.node.addEventListener('wheel', function myFunction(e) {
         var newsign = Math.sign(e.deltaY);
-        n+= newsign*oldsign;
-        this.style['stroke-dashoffset'] = n+'em';
+        n += newsign*oldsign;
+        this.style['stroke-dashoffset'] = (n % 100)+'%';
         oldsign = newsign;
         //console.log(n);
         e.preventDefault();
