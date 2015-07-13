@@ -17,12 +17,12 @@ angular.module('knobyApp')
       };
 
       this.onMove = function (dx, dy) { // move ...
-        this.transform(self.t+'T'+dx+','+dy);
+        this.transform(self.t + 'T' + dx + ',' + dy);
       };
 
       this.onStart = function () { // start ...
         self.t = this.transform();
-        return angular.isFunction(onStart) ? onStart.call(this): undefined;
+        return angular.isFunction(onStart) ? onStart.call(this) : undefined;
       };
 
       view.drag(this.onMove, this.onStart, function () { // end ...
@@ -83,7 +83,7 @@ angular.module('knobyApp')
       };
 
       self.onDragStart = function () {
-        this.animate( {'opacity':0.1}, 500);
+        this.animate({'opacity': 0.1}, 500);
       };
 
       self.dragster = new DragController(self.view, self.onDragStart, self.onDragEnd);
@@ -114,6 +114,16 @@ angular.module('knobyApp')
     DestinationController.prototype.constructor = DestinationController;
 
 
+    return {
+      DragController: DragController,
+      HoverController: HoverController,
+      ConditionController: ConditionController,
+      CommandController: CommandController,
+      DestinationController: DestinationController
+    };
+
+  }]).factory('factories', ['knobs', function (knobs) {
+
     function Factory(clazz) {
       this.clazz = ['kby-factory', clazz].join(' ');
     }
@@ -132,7 +142,7 @@ angular.module('knobyApp')
       angular.element(view.node).attr('class', this.clazz);
 
       this.glow = view.glow();
-      this.hoverer = new HoverController(this.view, this.glow);
+      this.hoverer = new knobs.HoverController(this.view, this.glow);
 
       var self = this;
       this.onDragEnd = function () {
@@ -146,7 +156,7 @@ angular.module('knobyApp')
         angular.element(this.node).attr('class', '');
         return factory;
       };
-      this.dragster = new DragController(this.view, self.onDragStart, self.onDragEnd);
+      this.dragster = new knobs.DragController(this.view, self.onDragStart, self.onDragEnd);
     };
 
 
@@ -156,7 +166,7 @@ angular.module('knobyApp')
 
     ConditionsFactoryController.prototype = new Factory('kby-condition');
     ConditionsFactoryController.prototype.constructor = ConditionsFactoryController;
-    ConditionsFactoryController.prototype.producer = ConditionController;
+    ConditionsFactoryController.prototype.producer = knobs.ConditionController;
 
 
     function CommandsFactoryController(view, onNewInstance) {
@@ -165,7 +175,7 @@ angular.module('knobyApp')
 
     CommandsFactoryController.prototype = new Factory('kby-command');
     CommandsFactoryController.prototype.constructor = CommandsFactoryController;
-    CommandsFactoryController.prototype.producer = CommandController;
+    CommandsFactoryController.prototype.producer = knobs.CommandController;
 
 
     function DestinationsFactoryController(view, onNewInstance) {
@@ -174,8 +184,7 @@ angular.module('knobyApp')
 
     DestinationsFactoryController.prototype = new Factory('kby-destination');
     DestinationsFactoryController.prototype.constructor = DestinationsFactoryController;
-    DestinationsFactoryController.prototype.producer = DestinationController;
-
+    DestinationsFactoryController.prototype.producer = knobs.DestinationController;
 
 
     return {
@@ -184,4 +193,5 @@ angular.module('knobyApp')
       DestinationsFactoryController: DestinationsFactoryController
     };
 
-  }]);
+  }])
+;

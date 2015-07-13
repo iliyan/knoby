@@ -7,7 +7,7 @@
  * # simpleKnob
  */
 angular.module('knobyApp')
-  .directive('simpleKnob', ['raphael', 'knobs', function (raphaelService, knobsFactory) {
+  .directive('simpleKnob', ['raphael', 'factories', function (raphaelService, knobsFactory) {
 
 
     return {
