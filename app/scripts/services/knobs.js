@@ -17,20 +17,16 @@ angular.module('knobyApp')
       };
 
       this.onMove = function (dx, dy) { // move ...
-        this.attr({
-          cx: Math.max(self.x + dx, 15),
-          cy: Math.max(self.y + dy, 15)
-        });
+        this.transform(self.t+'T'+dx+','+dy);
       };
 
       this.onStart = function () { // start ...
-        self.x = this.attr('cx');
-        self.y = this.attr('cy');
-        return angular.isFunction(onStart) ? onStart.call(this) : undefined;
+        self.t = this.transform();
+        return angular.isFunction(onStart) ? onStart.call(this): undefined;
       };
 
       view.drag(this.onMove, this.onStart, function () { // end ...
-        this.animate({ms: 800, easing: 'bounce', 'r': 100, 'stroke-width': 10});
+        self.t = this.transform();
         onDone.call(this);
       });
     }
