@@ -8,7 +8,7 @@
  * Factory in the knobyApp.
  */
 angular.module('knobyApp')
-  .factory('knobs', [function () {
+  .factory('knobs', ['hammer', function (Hammer) {
 
     function DragController(view, onStart, onDone) {
 
@@ -49,24 +49,23 @@ angular.module('knobyApp')
         glow.remove();
       };
     }
-
     HoverController.prototype = {};
     HoverController.prototype.constructor = HoverController;
+
+
 
     function KnobController(clazz) {
       this.clazz = [this.clazz, clazz].join(' ');
     }
-
     KnobController.prototype = {clazz: 'kby-knob'};
     KnobController.prototype.constructor = KnobController;
 
-    KnobController.prototype.toggler = function (newClass) {
+    KnobController.prototype.toggler = function (newClass, initialState) {
       var self = this;
-      self.view.node.classList.toggle(newClass);
-      self.view.undblclick();
-      self.view.dblclick(function () {
-        self.toggler.call(self, newClass);
-      });
+      self.view.node.classList[initialState ? 'add' : 'remove'](newClass);
+      return function() {
+        self.view.node.classList.toggle(newClass);
+      };
     };
 
     KnobController.prototype.attach = function (view) {
@@ -76,9 +75,12 @@ angular.module('knobyApp')
       var self = this;
       self.view = view;
       angular.element(self.view.node).attr('class', self.clazz);
-      self.view.node.classList.add('adjustable');
-      self.toggler('adjustable');
 
+      self.hammertime = new Hammer(self.view.node);
+
+      self.view.undblclick();
+      self.view.unclick();
+      self.hammertime.on('doubletap', self.toggler('adjustable', false));
 
       self.onDragEnd = function () {
         this.node.classList.remove('mobile');
@@ -97,9 +99,11 @@ angular.module('knobyApp')
         n+= newsign*oldsign;
         this.style['stroke-dashoffset'] = n+'em';
         oldsign = newsign;
-        console.log(n);
+        //console.log(n);
         e.preventDefault();
       });
+
+
 
 
     };

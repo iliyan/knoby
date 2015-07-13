@@ -12,7 +12,8 @@
     "bootstrap": "~3.3",
     "raphael": "~2.1.4",
     "raphael.free_transform": "*",
-    "lodash": "~3.10.0"
+    "lodash": "~3.10.0",
+    "hammer.js": "~2.0.4"
   },
   "devDependencies": {
     "angular-mocks": "~1.3"
