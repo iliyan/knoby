@@ -9,6 +9,7 @@
  */
 angular.module('knobyApp')
   .factory('knobs', [function () {
+
     function DragController(view, onStart, onDone) {
 
       var self = this;
@@ -44,6 +45,7 @@ angular.module('knobyApp')
       });
 
       this.destroy = function () {
+        view.unhover();
         glow.remove();
       };
     }
@@ -87,6 +89,19 @@ angular.module('knobyApp')
       };
 
       self.dragster = new DragController(self.view, self.onDragStart, self.onDragEnd);
+
+      var n=0;
+      var oldsign=0;
+      self.view.node.addEventListener('wheel', function myFunction(e) {
+        var newsign = Math.sign(e.deltaY);
+        n+= newsign*oldsign;
+        this.style['stroke-dashoffset'] = n+'em';
+        oldsign = newsign;
+        console.log(n);
+        e.preventDefault();
+      });
+
+
     };
 
 
