@@ -10,7 +10,6 @@
     "angular-sanitize": "~1.3",
     "angular-touch": "~1.3",
     "bootstrap": "~3.3",
-    "threejs": "*",
     "raphael": "~2.1.4",
     "raphael.free_transform": "*",
     "lodash": "~3.10.0"
