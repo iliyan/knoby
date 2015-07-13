@@ -89,21 +89,17 @@ body {
   r: 60;
   stroke: red;
   stroke-width: 6;
-  opacity: 1
+  opacity: 1;
 }
 
-.adjustable {
+.kby-knob.adjustable {
   stroke-dasharray: 2 2;
   stroke-dashoffset: 16;
 }
 
-.adjustable {
-  stroke-dasharray: 2 2;
-  stroke-dashoffset: 16;
-}
-
-.mobile {
-  opacity: 0.1
+.kby-knob.mobile {
+  opacity: 0.1;
+  transition: 1s linear all;
 }
 
 .kby-condition {
