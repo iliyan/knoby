@@ -36,7 +36,19 @@ angular.module('knobyApp')
     DragController.prototype.constructor = DragController;
 
 
+    var assert = function(condition, comment){
+      comment = comment || '';
+      var message = 'Failed assertion: ' + comment;
+      if(!condition) {
+        console.log(message);
+        throw new ReferenceError(message)
+      }
+    };
+
     function HoverController(view, glow) {
+
+      assert(view, 'view must be defined');
+      glow = glow || view.glow();
       glow.hide();
       view.hover(function () {
         glow.show();
@@ -71,10 +83,9 @@ angular.module('knobyApp')
 
 
 
-    function createDragController(view, onDragStart, onDragEnd) {
+    var createDragController = function (view, onDragStart, onDragEnd) {
       return new DragController(view, onDragStart, onDragEnd);
-    }
-
+    };
 
 
 
@@ -143,10 +154,14 @@ angular.module('knobyApp')
     DestinationController.prototype.constructor = DestinationController;
 
 
+    var createHoverController = function(view, glow){
+      return new HoverController(view, glow);
+    };
+
     return {
       createDragController: createDragController,
+      createHoverController: createHoverController,
 
-      HoverController: HoverController,
       ConditionController: ConditionController,
       CommandController: CommandController,
       DestinationController: DestinationController
@@ -172,7 +187,7 @@ angular.module('knobyApp')
       angular.element(view.node).attr('class', this.clazz);
 
       this.glow = view.glow();
-      this.hoverer = new knobs.HoverController(this.view, this.glow);
+      this.hoverer = knobs.createHoverController(this.view, this.glow); ;
 
       var self = this;
       this.onDragEnd = function () {
