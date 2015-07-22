@@ -68,6 +68,16 @@ angular.module('knobyApp')
       };
     };
 
+
+
+
+    function createDragController(view, onDragStart, onDragEnd) {
+      return new DragController(view, onDragStart, onDragEnd);
+    }
+
+
+
+
     KnobController.prototype.attach = function (view) {
       if (!view) {
         throw new ReferenceError();
@@ -90,7 +100,7 @@ angular.module('knobyApp')
         this.node.classList.add('mobile');
       };
 
-      self.dragster = new DragController(self.view, self.onDragStart, self.onDragEnd);
+      self.dragster = createDragController(self.view, self.onDragStart, self.onDragEnd);
 
       var n=0;
       var oldsign=0;
@@ -134,7 +144,8 @@ angular.module('knobyApp')
 
 
     return {
-      DragController: DragController,
+      createDragController: createDragController,
+
       HoverController: HoverController,
       ConditionController: ConditionController,
       CommandController: CommandController,
@@ -175,7 +186,7 @@ angular.module('knobyApp')
         angular.element(this.node).attr('class', '');
         return factory;
       };
-      this.dragster = new knobs.DragController(this.view, self.onDragStart, self.onDragEnd);
+      this.dragster = knobs.createDragController(this.view, self.onDragStart, self.onDragEnd);
     };
 
 
