@@ -15,8 +15,8 @@ describe('Service: hover', function () {
     expect(!!knobs).toBe(true);
   });
 
-  fit('should be be a promise', function () {
-    var dragster = new knobs.createHoverController({glow: angular.noop});
+  it('should be be a promise', function () {
+    var dragster = new knobs.createHoverController({glow: angular.noop, hover: angular.noop});
 
     expect(dragster).toBeDefined();
   });

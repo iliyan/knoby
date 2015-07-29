@@ -45,10 +45,12 @@ angular.module('knobyApp')
       }
     };
 
+    var NULL_GLOW = {show: angular.noop, hide: angular.noop};
+
     function HoverController(view, glow) {
 
       assert(view, 'view must be defined');
-      glow = glow || view.glow();
+      glow = glow || view.glow() || NULL_GLOW;
       glow.hide();
       view.hover(function () {
         glow.show();
