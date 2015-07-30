@@ -114,6 +114,15 @@ body {
   fill: #e0e0e0;
 }
 
+.kby-factory:hover {
+  stroke: gray;
+}
+
+.kby-factory:active {
+  stroke: black;
+  cursor: pointer;
+}
+
 .kby-factory.kby-condition {
   fill: #f3e7d6;
   stroke-width: 3;
