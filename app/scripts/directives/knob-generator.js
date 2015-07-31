@@ -9,8 +9,11 @@
 angular.module('knobyApp')
   .directive('knobGenerator', function () {
     return {
-      scope: {},
-      template: '<circle class="kby-factory"></circle>',
+      scope: {
+        x : '=x',
+        y : '=y'
+      },
+      templateUrl: 'views/knob-generator.html',
       templateNamespace:'svg',
       restrict: 'E',
       replace: true,

@@ -114,28 +114,28 @@ body {
   fill: #e0e0e0;
 }
 
-.kby-factory:hover {
+.kby-factory:hover > circle {
   stroke: gray;
 }
 
-.kby-factory:active {
+.kby-factory:active > circle {
   stroke: black;
   cursor: pointer;
 }
 
-.kby-factory.kby-condition {
+.kby-factory.kby-condition > circle {
   fill: #f3e7d6;
   stroke-width: 3;
   r: 20
 }
 
-.kby-factory.kby-command {
+.kby-factory.kby-command > circle {
   fill: #d6dffe;
   stroke-width: 3;
   r: 20
 }
 
-.kby-factory.kby-destination {
+.kby-factory.kby-destination > circle {
   fill: #e0e0e0;
   stroke-width: 3;
   r: 20
