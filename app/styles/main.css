@@ -85,8 +85,8 @@ body {
 
 /* knobs: */
 
-.kby-knob {
-  r: 60;
+.kby-knob  {
+  r: 80;
   stroke: red;
   stroke-width: 6;
   opacity: 1;
@@ -95,11 +95,6 @@ body {
 .kby-knob.adjustable {
   stroke-dasharray: 2 2;
   stroke-dashoffset: 16;
-}
-
-.kby-knob.mobile {
-  opacity: 0.1;
-  transition: 1s linear all;
 }
 
 .kby-condition {
@@ -119,8 +114,15 @@ body {
 }
 
 .kby-factory:active > circle {
-  stroke: black;
   cursor: pointer;
+  stroke: red;
+  stroke-width: 6;
+  opacity: 0.1;
+}
+
+.kby-factory:active > circle.dragging {
+  r: 80;
+  transition: 0.2s linear all
 }
 
 .kby-factory.kby-condition > circle {
