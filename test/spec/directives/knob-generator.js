@@ -13,9 +13,8 @@ describe('Directive: knobGenerator', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<knob-generator></knob-generator>');
-    element = $compile(element)(scope);
-    expect(element.length).toBe(1);
-    expect(element[0].nodeName).toBe('circle');
+    element = $compile(angular.element('<knob-generator></knob-generator>'))(scope);
+    console.log(element.html());
+    expect(element.find('circle').length).toBe(1);
   }));
 });

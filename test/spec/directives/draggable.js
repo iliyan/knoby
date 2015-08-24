@@ -13,7 +13,7 @@ describe('Directive: draggable', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<draggable></draggable>');
+    element = angular.element('<circle draggable></circle>');
     element = $compile(element)(scope);
     expect(element.text()).toBe('');
   }));

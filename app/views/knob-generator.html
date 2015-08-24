@@ -1,5 +1,5 @@
 
-<g ng-attr-transform="translate({{x}},{{y}})" class="kby-factory">
-  <circle >
+<g class="kby-factory" >
+  <circle draggable on-drag-end="onDragEnd(x,y)" ng-attr-transform="matrix(1 0 0 1 {{x}} {{y}})" class="bogus">
   </circle>
 </g>

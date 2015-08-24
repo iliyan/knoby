@@ -7,45 +7,38 @@
  * # draggable
  */
 angular.module('knobyApp')
-  .directive('draggable', ['$document', function ($document) {
-    return function (scope, element, attr) {
-      var startX = 0, startY = 0;
-      var clazz;
-      var tranformation;
-      element.on('mousedown', function (event) {
-        // Prevent default dragging of selected content
-        event.preventDefault();
-        tranformation = element.attr("transform").slice(7,-1).split(' ');
-        for(var i=0; i<tranformation.length; i++) {
-          tranformation[i] = parseFloat(tranformation[i]);
+  .directive('draggable', ['$document', 'd3', function ($document, d3) {
+    return {
+      scope: {
+        onDragEnd : '&'
+      },
+      link: function (scope, element, attr) {
+
+        function dragstart(d) {
+          d.transform = d3.select(this).attr("transform").slice(7,-1).split(' ').map(parseFloat);
+          d.transform0 = d3.select(this).attr("transform").slice(7,-1).split(' ').map(parseFloat);
         }
 
-        scope.isProcreating = true;
-        startX = event.screenX - tranformation[4];
-        startY = event.screenY - tranformation[5];
+        function dragend(d) {
+          d3.select(this).attr("transform", "matrix(" + d.transform0.join(' ') + ")");
+          scope.onDragEnd({x: d.transform[4], y: d.transform[5]});
+        }
 
-        clazz = element.attr('class');
-        element.attr('class', 'dragging');
+        function dragmove(d) {
+          d.transform[4] = d3.event.x;
+          d.transform[5] = d3.event.y;
+          d3.select(this).attr("transform", "matrix(" + d.transform.join(' ') + ")");
+        }
 
-        $document.on('mousemove', mousemove);
-        $document.on('mouseup', mouseup);
-      });
+        var drag = d3.behavior
+          .drag()
+          .on("dragstart", dragstart)
+          .on("drag", dragmove)
+          .on("dragend", dragend);
 
-      function mousemove(event) {
-
-        tranformation[4] = event.screenX - startX;
-        tranformation[5] = event.screenY - startY;
-
-        var moved = "matrix(" + tranformation.join(' ') + ")";
-        element.attr("transform", moved);
-
-      }
-
-      function mouseup() {
-        scope.isProcreating = false;
-        element.attr('class', clazz);
-        $document.off('mousemove', mousemove);
-        $document.off('mouseup', mouseup);
+        d3.select(element[0])
+          .datum([{}])
+          .call(drag);
       }
     };
   }]);

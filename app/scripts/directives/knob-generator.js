@@ -8,6 +8,17 @@
  */
 angular.module('knobyApp')
   .directive('knobGenerator', function () {
+
+    function postLink(scope, element, attrs, knobWorld) {
+      scope.isProcreating = scope.isProcreating || false;
+      scope.onDragEnd = function (x, y) {
+        console.log(x, y);
+
+
+      }
+
+    }
+
     return {
       scope: {
         x : '=x',
@@ -15,11 +26,16 @@ angular.module('knobyApp')
       },
       templateUrl: 'views/knob-generator.html',
       templateNamespace:'svg',
-      restrict: 'E',
+      restrict: 'AE',
       replace: true,
-      require: '^knobWorld'
-      //link: function postLink(scope, element, attrs) {
-      //  element.text('this is the knobGenerator directive');
-      //}
+      require: '^knobWorld',
+      compile: function(tElement, tAttrs, transclude) {
+        return {
+          pre: function preLink(scope, iElement, iAttrs, controller) {
+            return;
+          },
+          post: postLink
+        };
+      }
     };
   });

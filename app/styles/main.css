@@ -120,11 +120,6 @@ body {
   opacity: 0.1;
 }
 
-.kby-factory:active > circle.dragging {
-  r: 80;
-  transition: 0.2s linear all
-}
-
 .kby-factory.kby-condition > circle {
   fill: #f3e7d6;
   stroke-width: 3;

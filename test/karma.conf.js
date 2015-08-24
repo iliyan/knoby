@@ -31,14 +31,15 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/bootstrap/dist/js/bootstrap.js',
+      'bower_components/d3/d3.js',
       'bower_components/raphael/raphael.js',
       'bower_components/raphael.free_transform/raphael.free_transform.js',
       'bower_components/lodash/lodash.js',
       'bower_components/hammer.js/hammer.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
-      'app/scripts/modules/hammer/app.js',
-      'app/scripts/modules/lodash/app.js',
+
+      'app/scripts/modules/**/app.js',
       'app/scripts/app.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

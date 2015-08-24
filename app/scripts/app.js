@@ -12,6 +12,7 @@ angular
   .module('knobyApp', [
     'knoby.hammer',
     'knoby.lodash',
+    'knoby.d3',
     'ngAnimate',
     'ngCookies',
     'ngResource',
