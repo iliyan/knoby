@@ -4,8 +4,9 @@ describe('Directive: knobGenerator', function () {
 
   // load the directive's module
   beforeEach(module('knobyApp'));
+  beforeEach(module('knoby.templates'));
 
-  var element,
+  var
     scope;
 
   beforeEach(inject(function ($rootScope) {
@@ -13,8 +14,8 @@ describe('Directive: knobGenerator', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = $compile(angular.element('<knob-generator></knob-generator>'))(scope);
-    console.log(element.html());
+    var element = $compile("<knob-world><knob-generator></knob-generator></knob-world>")(scope);
+    scope.$digest();
     expect(element.find('circle').length).toBe(1);
   }));
 });

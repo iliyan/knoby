@@ -25,6 +25,7 @@ angular.module('knobyApp')
         y : '=y'
       },
       templateUrl: 'views/knob-generator.html',
+      type:'svg',
       templateNamespace:'svg',
       restrict: 'AE',
       replace: true,

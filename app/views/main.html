@@ -9,10 +9,12 @@
 
 <div class="row">
   <div class="col-lg-12" style="height:800px">
-    <knob-world>
+    <knob-world ng-init="model = {knobs:[]}">
       <knob-generator x="50" y=50 class="kby-condition"></knob-generator>
       <knob-generator x="100" y=50 class="kby-command"></knob-generator>
       <knob-generator x="150" y=50 class="kby-destination"></knob-generator>
+
+      <knob ng-repeat="k in model.knobs"></knob>
     </knob-world>
   </div>
 </div>

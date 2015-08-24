@@ -19,6 +19,17 @@ module.exports = function(config) {
       'jasmine'
     ],
 
+      // if you have defined plugins explicitly, add karma-ng-html2js-preprocessor
+    plugins: [
+      'karma-phantomjs-launcher',
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor'  // Needs karma-ng-html2js-preprocessor module
+    ],
+
+          preprocessors: {
+      '**/*.html': ['ng-html2js'] // Needs karma-ng-html2js-preprocessor module
+    },
+
     // list of files / patterns to load in the browser
     files: [
       // bower:js
@@ -43,12 +54,18 @@ module.exports = function(config) {
       'app/scripts/app.js',
       'app/scripts/**/*.js',
       'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      'test/spec/**/*.js',
+      'app/views/*.html'
     ],
 
     // list of files / patterns to exclude
     exclude: [
     ],
+
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'app/',
+      moduleName: 'knoby.templates'
+    },
 
     // web server port
     port: 8080,
@@ -65,13 +82,7 @@ module.exports = function(config) {
       'PhantomJS'
     ],
 
-    // Which plugins to enable
-    plugins: [
-      'karma-phantomjs-launcher',
-      'karma-jasmine'
-    ],
-
-    // Continuous Integration mode
+   // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
     singleRun: false,
 
