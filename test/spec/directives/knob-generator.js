@@ -18,4 +18,6 @@ describe('Directive: knobGenerator', function () {
     scope.$digest();
     expect(element.find('circle').length).toBe(1);
   }));
+
+
 });

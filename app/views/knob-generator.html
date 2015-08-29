@@ -1,5 +1,7 @@
 
 <g class="kby-factory" >
-  <circle draggable on-drag-end="onDragEnd(x,y)" ng-attr-transform="matrix(1 0 0 1 {{x}} {{y}})" class="bogus">
+  <circle draggable on-drag-end="spi.onDragEndCallback(x,y)"
+          ng-attr-transform="matrix(1 0 0 1 {{x}} {{y}})"
+          class="bogus">
   </circle>
 </g>
